@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tours</title><link rel="icon" href="assets/logo.svg"><link rel="stylesheet" href="assets/css/style.css"></head>
+<body>
+<div class="bar" id="bar" aria-live="polite"></div>
+<header class="hd" id="hd"></header>
+<main id="app"></main>
+<section id="book" class="sec bk"><h2 data-i="form_title"></h2>
+<form id="form" novalidate><label><span data-i="f_tour"></span><select name="tour" id="tour"></select></label>
+<label><span data-i="f_date"></span><input type="date" name="date"></label>
+<label><span data-i="f_guests"></span><input type="number" name="guests" min="1" value="2"></label>
+<label><span data-i="f_name"></span><input name="name" autocomplete="name"></label>
+<label><span data-i="f_contact"></span><input name="contact" autocomplete="tel"></label>
+<label class="wide"><span data-i="f_msg"></span><textarea name="msg" rows="3"></textarea></label>
+<button class="b" data-i="f_send"></button><p id="status" role="status"></p></form></section>
+<footer class="ft"><div class="fc"><b id="fcompany"></b><span id="fplace"></span></div>
+<div class="fc"><a data-tel data-track="phone_click" data-loc="footer" id="ftel"></a><a data-wa data-track="whatsapp_click" data-loc="footer" target="_blank" rel="noopener">WhatsApp</a><a data-tg data-track="telegram_click" data-loc="footer" target="_blank" rel="noopener">Telegram</a><a id="fmail"></a></div></footer>
+<div class="fab"><a data-wa data-track="whatsapp_click" data-loc="float" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a><a data-tg data-track="telegram_click" data-loc="float" target="_blank" rel="noopener" aria-label="Telegram">TG</a><a data-tel data-track="phone_click" data-loc="float" aria-label="Call">☎</a></div>
+<script src="config.js"></script><script src="assets/js/app.js"></script></body></html>
