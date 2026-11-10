@@ -1,27 +1,43 @@
-# Digital booking system for tours — demo template
+# Lotus Route
 
-Статический сайт (HTML/CSS/JS), без сборки. Работает на GitHub Pages, Netlify, Cloudflare Pages.
+Mobile-first bilingual Vietnam tours landing page built with Next.js App Router, TypeScript, Tailwind CSS, Radix UI and React Hook Form.
 
-## Что менять под клиента — только `config.js`
-Название, логотип, страна/город, телефон, WhatsApp, Telegram, email, валюта, языки, категории,
-экскурсии (название, описание, цена, длительность, фото), `premium: true` для дорогих программ.
-Фото — в `assets/photos/` (hero 1920x1080, карточки 1000x1250), пути в `config.js`: `hero` и `tours[].photo`. Сейчас там SVG-заглушки.
+## Run locally
 
-## Главная в стиле каталога (`config.js` → `home`)
-Секции идут по порядку: `hero` (полноэкранный баннер), `row` (карусель программ), `tabs`, `cta`, `grid` (фильтр по категориям), `tiles`.
-Фон секции и карточки: `photo` (ваш файл из `assets/photos/`) или `video` (mp4) для hero. Если файла нет, показывается готовая иллюстрация из `assets/img/` (sunset, bay, night, city, beach, falls).
-Меню шапки и выпадающие панели строятся из `categories` и `tours`.
+```bash
+npm install
+cp .env.example .env.local
+# Add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID to .env.local
+npm run dev
+```
 
-## Заявки
-`formEndpoint` пустой — заявка открывает WhatsApp с готовым текстом.
-Для заявок на почту/в CRM вставьте URL Formspree, Make или Zapier.
+Open `http://localhost:3000/ru` or `http://localhost:3000/en`. The root path redirects to Russian.
 
-## Аналитика (`config.js` → analytics)
-`ga4Id: "G-XXXXXXXXXX"`, `metaPixelId: "123456789"`. Пустые поля — скрипты не грузятся.
-События: `whatsapp_click`, `telegram_click`, `phone_click` (с полем `location`: hero/float/footer),
-`select_item`, `form_start`, `generate_lead` (value = цена программы). В GA4 отметьте `generate_lead` как ключевое событие.
-Если работаете с аудиторией из ЕС, добавьте баннер согласия на cookies.
+## Build and lint
 
-## Публикация на GitHub Pages
-1. Распакуйте архив и загрузите содержимое папки в репозиторий (корень, рядом с `index.html`).
-2. Settings → Pages → Branch: `main` / root → Save.
+```bash
+npm run lint
+npm run build
+npm start
+```
+
+## Client configuration
+
+- `src/config/site.ts` — name, contact details, links, location, working hours, payment URL and map.
+- `src/data/tours.ts` — tour cards, descriptions, demo prices and photo paths.
+- `src/data/categories.ts` — category tiles and image paths.
+- `src/data/reviews.ts` — sample reviews; replace with verified reviews before launch.
+- `src/data/faq.ts` — FAQ item IDs.
+- `src/i18n/ru.ts` and `src/i18n/en.ts` — interface and FAQ copy.
+- `public/images/README.md` — requested photo files and recommended dimensions.
+
+Replace every `DEMO: REPLACE` value, placeholder contact/link, sample review and policy text before launch. The Telegram endpoint needs `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`; keep both in `.env.local` or your hosting provider's secret manager. Never commit secrets.
+
+Photo slots render an accessible CSS placeholder until the corresponding local file is added under `public/images`. Once a file exists, it is rendered through `next/image`. The hero is the only priority image.
+
+## Routes
+
+- `/ru` — Russian landing page.
+- `/en` — English landing page.
+- `/ru/privacy-policy` and `/en/privacy-policy` — sample privacy notice. Replace it with approved legal text before launch.
+- `/api/lead` — validated lead endpoint; sends messages to Telegram when server environment variables are configured.

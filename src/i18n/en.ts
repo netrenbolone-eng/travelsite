@@ -1,0 +1,35 @@
+import type { Dictionary } from "@/i18n/types";
+
+export const en: Dictionary = {
+  announcements: [
+    "See Vietnam on a route made for you",
+    "Dalat, Da Nang and Nha Trang — choose your next escape",
+    "Book direct — our team is here every day",
+    "Your Vietnam getaway starts with one message",
+    "Private tours and transfers shaped around your plans",
+  ],
+  announcementControls: { pause: "Pause announcements", resume: "Resume announcements" },
+  header: { tours: "Tours", how: "How it works", reviews: "Reviews", faq: "FAQ", contacts: "Contacts", whatsapp: "Message on WhatsApp", menu: "Menu", close: "Close" },
+  hero: { eyebrow: "ROUTES WORTH REMEMBERING", title: "VIETNAM YOUR WAY", description: "Find a tour, guide and transfer that fit your pace. Message us on WhatsApp or Telegram while you explore.", whatsapp: "Message on WhatsApp", tours: "Explore tours", photoPlaceholder: "Replace with hero.jpg", photoAlt: "Placeholder for a Vietnam mountain landscape photo", scroll: "SCROLL TO EXPLORE" },
+  trust: { rating: "rating", guests: "guests", guides: "Russian-speaking guides", payments: "Deposit · transfer · cash", demo: "demo" },
+  categories: { title: "HOW WOULD YOU LIKE TO EXPLORE?", items: { excursions: "EXCURSIONS", transfers: "TRANSFERS", bike: "BIKE RENTAL", custom: "CUSTOM ROUTES" }, imagePlaceholder: "Photo coming soon" },
+  tours: { title: "POPULAR TOURS", subtitle: "Choose an idea or message us directly — we will help with dates and details.", hit: "BESTSELLER", fresh: "NEW", from: "from", book: "Book now", ask: "Ask on WhatsApp", all: "Explore all tours", duration: "Duration", reviews: "reviews", dialogTitle: "Send a request", dialogDescription: "Your tour is preselected. Leave your contact details and we will confirm the details shortly." },
+  workflow: { title: "HOW IT WORKS", subtitle: "No waiting for a call or a long back-and-forth.", steps: [ { title: "Message us", description: "Choose a tour and send your question in the messenger you prefer." }, { title: "Get a reply", description: "We confirm availability, route details and the full price." }, { title: "Pay a deposit", description: "Secure your spot using a payment method that works for you." }, { title: "Enjoy the trip", description: "Your guide or driver meets you at the agreed place." } ] },
+  reviews: { title: "GUESTS RECOMMEND US", subtitle: "A few stories from our travellers.", source: "Demo reviews", more: "Find us on Google Maps", moreTripadvisor: "View on TripAdvisor", demoNotice: "These are sample reviews. Replace them with verified feedback before launch." },
+  faq: { title: "FREQUENT QUESTIONS", subtitle: "The useful details, answered clearly.", contact: "Still have a question? Message us", items: {
+    included: { question: "What is included in the tour price?", answer: "It depends on the route. Before booking, we will send a clear list of inclusions, optional extras and what to bring." },
+    payment: { question: "How does payment work?", answer: "A small deposit usually confirms your place. The balance may be paid by transfer or in cash at pickup when the tour provider allows it." },
+    cancellation: { question: "Can I cancel or reschedule?", answer: "Terms depend on the provider and date. We will explain the exact cancellation and rescheduling deadlines before you pay a deposit." },
+    children: { question: "Can children join the trip?", answer: "Many routes are family-friendly. Tell us the children’s ages so we can check safety, trip length and available equipment." },
+    weather: { question: "What if the weather turns bad?", answer: "If conditions are unsafe, we will offer rescheduling or cancellation according to the route’s policy. Any refund will be agreed in advance." },
+    transfer: { question: "Can the transfer pick us up at our hotel?", answer: "Hotel pickup can often be added to private tours. We will confirm the pickup area and time in your messages." },
+    "guide-language": { question: "What language does the guide speak?", answer: "We aim to match Russian-speaking guests with a Russian-speaking guide. Availability is confirmed for your date before booking." },
+    booking: { question: "How do I book a tour?", answer: "Choose a tour and send the website request form, or message us on WhatsApp/Telegram. We confirm the date and price before you pay a deposit." },
+  } },
+  form: { title: "LET'S PLAN YOUR ROUTE", description: "Leave your details. We will reply in your messenger and confirm everything without a phone call queue.", name: "Your name", contact: "Phone or WhatsApp", messenger: "Preferred contact", whatsapp: "WhatsApp", telegram: "Telegram", phone: "Phone call", tour: "Tour", chooseTour: "Choose a tour", date: "Preferred date", guests: "Number of guests", comment: "Comment", submit: "Send request", sending: "Sending…", required: "Please enter your name and phone number.", invalid: "Please check the phone number.", success: "Request sent! We will message you shortly.", continueWhatsApp: "Continue on WhatsApp", spam: "Leave this field empty", privacy: "By submitting, you agree to our privacy policy.", selectDate: "You can leave this blank", paymentTitle: "PAYMENT", paymentLink: "Pay a deposit", transfer: "Bank transfer", cash: "Cash on arrival", paymentNote: "We will confirm the payment method and deposit amount before booking." },
+  contacts: { title: "HERE EVERY DAY", subtitle: "Plan before you arrive, and get support along the way.", address: "Address", hours: "Hours", email: "Email", phone: "Phone", mapTitle: "Lotus Route office on the map" },
+  footer: { tagline: "Vietnam feels closer when the route is yours.", social: "Follow along", payments: "Payment methods", rights: "© 2026 Lotus Route. Demo website.", privacy: "Privacy policy", policyTitle: "Privacy policy", policyBody: ["This demo page shows how Lotus Route may handle contact details submitted through the lead form.", "Before launch, add the actual data controller details, retention period, purposes of processing and consent withdrawal method. Replace this sample with advice from a local privacy professional.", "Form submissions are sent to the company Telegram bot and used only to answer your enquiry. Do not send payment details through this form."] },
+  sticky: { whatsapp: "WhatsApp", telegram: "Telegram", call: "Call" },
+  common: { close: "Close", loading: "Loading" },
+  metadata: { title: "Vietnam tours in English | Lotus Route", description: "Excursions, transfers and private routes across Vietnam. Choose a tour and message the Lotus Route team directly." },
+};

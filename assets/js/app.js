@@ -51,7 +51,7 @@
   };
   function header() {
     var logo = C.logo ? '<img alt="" src="' + C.logo + '">' : "<i>" + C.company.charAt(0) + "</i>";
-    var nav = Object.keys(C.categories).map(function (c) {
+    var nav = Object.keys(C.categories).slice(0, 3).map(function (c) {
       var ts = C.tours.filter(function (t) { return t.cat === c; }), f = ts[0];
       return '<li><a data-go="cat:' + c + '">' + L(C.categories[c]) + "</a>" + (f ? '<div class="mega"><div><h4>' + L(C.categories[c]) + "</h4><ul>" + ts.map(function (t) { return '<li><a data-pick="' + t.id + '">' + L(t.title) + "</a></li>"; }).join("") + '</ul></div><a class="tile" data-pick="' + f.id + '"><div class="bg" style="' + bgs(f.photo, sceneOf(f)) + '"></div><div class="tc"><h3>' + L(f.title) + "</h3></div></a></div>" : "") + "</li>";
     }).join("") + '<li><a data-go="how">' + T("nav_how") + "</a></li>";
