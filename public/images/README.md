@@ -1,14 +1,7 @@
-# Photo placeholders
+# Local image assets
 
-Replace the CSS photo placeholders in the app with your own files. Keep these paths, use landscape/portrait crops that match each section, and update the placeholder component to render them with `next/image`, descriptive `alt`, and explicit dimensions.
+The `vietnam-*.svg` illustrations are in-use local fallback artwork for the region gallery, category tiles and tour cards. They ensure that the layout still works when external photography is unavailable.
 
-- `category-excursions.jpg` — excursions category (about 1000 × 1200)
-- `category-transfers.jpg` — transfers category (about 1000 × 1200)
-- `category-bike.jpg` — bike rental category (about 1000 × 1200)
-- `category-custom.jpg` — custom routes category (about 1000 × 1200)
-- `tour-dalat.jpg` — Dalat Highlands tour (about 1000 × 1250)
-- `tour-nhatrang.jpg` — Nha Trang Islands tour (about 1000 × 1250)
-- `tour-danang-hoian.jpg` — Da Nang and Hoi An tour (about 1000 × 1250)
-- `tour-ba-na-hills.jpg` — Ba Na Hills tour (about 1000 × 1250)
-- `tour-transfer.jpg` — airport transfer (about 1000 × 1250)
-- `tour-bike.jpg` — guided bike tour (about 1000 × 1250)
+The selected region gallery and the fixed page background also use fixed Unsplash CDN image URLs in the source code; credits and the image source list are in the root `CREDITS.md` file. The fixed background uses the original hero poster and `vietnam-bay.svg` as local fallbacks.
+
+To replace any illustration with an approved photo, add the file under `public/images/`, update the matching path in `src/data/categories.ts`, `src/data/tours.ts` or `src/components/region-explorer.tsx`, and keep a descriptive `alt` text. Suggested crops: category tiles 1000 × 1200 px; tour cards 1000 × 1250 px; region gallery 1000 × 650 px.

@@ -3,8 +3,9 @@
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { SiteHeader } from "@/components/site-header";
 import { useScrollChrome } from "@/hooks/use-scroll-chrome";
+import type { Locale } from "@/i18n/types";
 
-export function SiteChrome({ locale, hasHero = true }: { locale: "ru" | "en"; hasHero?: boolean }) {
+export function SiteChrome({ locale, hasHero = true }: { locale: Locale; hasHero?: boolean }) {
   const state = useScrollChrome();
 
   return (

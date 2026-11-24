@@ -1,18 +1,20 @@
 import { Hero } from "@/components/hero";
 import { SiteChrome } from "@/components/site-chrome";
 import { CategoriesSection, ContactsSection, FAQSection, FloatingContact, ReviewsSection, SiteFooter, ToursSection, WorkflowSection } from "@/components/landing-sections";
-import { ru } from "@/i18n/ru";
-import { en } from "@/i18n/en";
+import { getDictionary } from "@/i18n";
 import type { Locale } from "@/i18n/types";
 import { LeadSection } from "@/components/lead-section";
+import { RegionExplorer } from "@/components/region-explorer";
 import { faqIds } from "@/data/faq";
 import { site } from "@/config/site";
 
+const supportedLocales: Locale[] = ["ru", "en", "vi"];
+
 export default async function LocaleHome({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  if (locale !== "ru" && locale !== "en") return null;
+  if (!supportedLocales.includes(locale as Locale)) return null;
   const activeLocale = locale as Locale;
-  const dictionary = activeLocale === "ru" ? ru : en;
+  const dictionary = getDictionary(activeLocale);
   const travelAgencySchema = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
@@ -41,6 +43,7 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <main>
         <Hero locale={activeLocale} />
+        <RegionExplorer dictionary={dictionary} />
         <CategoriesSection locale={activeLocale} dictionary={dictionary} />
         <ToursSection locale={activeLocale} dictionary={dictionary} />
         <WorkflowSection dictionary={dictionary} />

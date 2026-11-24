@@ -2,13 +2,12 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight, MessageCircle, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { site } from "@/config/site";
-import { ru } from "@/i18n/ru";
-import { en } from "@/i18n/en";
+import { getDictionary } from "@/i18n";
+import type { Locale } from "@/i18n/types";
 import { HeroVideo } from "@/components/hero-video";
 
-export function Hero({ locale }: { locale: "ru" | "en" }) {
-  const isRu = locale === "ru";
-  const dictionary = isRu ? ru : en;
+export function Hero({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
   const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(dictionary.hero.description)}`;
   return (
     <section className="hero-section" aria-labelledby="hero-title">

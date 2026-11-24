@@ -1,19 +1,19 @@
-# Lotus Route
+# Lotus Route — Vietnam tours
 
-Mobile-first bilingual Vietnam tours landing page built with Next.js App Router, TypeScript, Tailwind CSS, Radix UI and React Hook Form.
+Адаптивный сайт туристической компании о путешествиях по Вьетнаму. Реализован на Next.js App Router, TypeScript, React, Tailwind CSS и Radix UI. Интерфейс доступен на русском, английском и вьетнамском языках.
 
-## Run locally
+## Запуск
 
 ```bash
-npm install
+npm ci
 cp .env.example .env.local
-# Add TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID to .env.local
+# Заполните TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID
 npm run dev
 ```
 
-Open `http://localhost:3000/ru` or `http://localhost:3000/en`. The root path redirects to Russian.
+Откройте `http://localhost:3000/ru`, `/en` или `/vi`. Корневой путь `/` перенаправляет на русскую версию.
 
-## Build and lint
+## Проверка и production-сборка
 
 ```bash
 npm run lint
@@ -21,23 +21,53 @@ npm run build
 npm start
 ```
 
-## Client configuration
 
-- `src/config/site.ts` — name, contact details, links, location, working hours, payment URL and map.
-- `src/data/tours.ts` — tour cards, descriptions, demo prices and photo paths.
-- `src/data/categories.ts` — category tiles and image paths.
-- `src/data/reviews.ts` — sample reviews; replace with verified reviews before launch.
-- `src/data/faq.ts` — FAQ item IDs.
-- `src/i18n/ru.ts` and `src/i18n/en.ts` — interface and FAQ copy.
-- `public/images/README.md` — requested photo files and recommended dimensions.
+## Предпросмотр
 
-Replace every `DEMO: REPLACE` value, placeholder contact/link, sample review and policy text before launch. The Telegram endpoint needs `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`; keep both in `.env.local` or your hosting provider's secret manager. Never commit secrets.
+- `preview.html` — переносимый локальный макет; откройте его в браузере. В нём используется исходный hero MP4.
+- `previews/desktop-preview.png` — статичный обзор дизайна на широком экране.
+- `previews/mobile-preview.png` — статичный обзор мобильной версии.
 
-Photo slots render an accessible CSS placeholder until the corresponding local file is added under `public/images`. Once a file exists, it is rendered through `next/image`. The hero is the only priority image.
+PNG-макеты иллюстративные, а не скриншоты запущенного Next.js-приложения. Для полноценной интерактивной версии используйте `npm run dev`.
 
-## Routes
+## Важное о точке входа
 
-- `/ru` — Russian landing page.
-- `/en` — English landing page.
-- `/ru/privacy-policy` and `/en/privacy-policy` — sample privacy notice. Replace it with approved legal text before launch.
-- `/api/lead` — validated lead endpoint; sends messages to Telegram when server environment variables are configured.
+Рабочая версия редизайна — приложение Next.js из `src/app/[locale]`, запускаемое через `npm run dev` и собираемое через `npm run build`. Файлы корневого `index.html`, `config.js` и папка `assets/` сохранены из исходного архива как legacy-статическая версия и не используются Next.js-маршрутизацией. Для проверки внешнего вида без установки зависимостей используйте `preview.html`.
+
+## Структура проекта
+
+- `src/app/[locale]/page.tsx` — главная страница каждого языка.
+- `src/app/[locale]/globals.css` — адаптивные стили, палитра и закреплённый фон.
+- `src/components/hero-video.tsx` — оригинальный плавно переключающийся hero-видеоблок.
+- `public/videos/` — оригинальные видео и постер hero. В редизайне эти файлы не заменялись.
+- `src/components/region-explorer.tsx` — интерактивный выбор шести регионов Вьетнама.
+- `src/i18n/ru.ts`, `src/i18n/en.ts`, `src/i18n/vi.ts` — интерфейс и контент на трёх языках.
+- `src/data/tours.ts` — карточки туров, цены и локализованные описания.
+- `src/data/categories.ts` — направления и плитки категорий.
+- `src/data/reviews.ts` — демонстрационные отзывы; перед запуском замените их реальными и подтверждёнными отзывами.
+- `src/config/site.ts` — контакты, ссылки, адрес, график, карта и платёжная ссылка.
+- `src/app/api/lead/route.ts` — валидация заявок и доставка в Telegram.
+
+## Настройки перед публикацией
+
+В `src/config/site.ts` сейчас оставлены демонстрационные значения. До запуска замените номер телефона, WhatsApp, Telegram, email, адрес, рабочее время, карту, платёжную ссылку, ссылки соцсетей, рейтинг и число гостей на подтверждённые данные компании. Также проверьте цены и состав туров, замените образцы отзывов и утвердите юридический текст политики конфиденциальности.
+
+Для формы заявок скопируйте `.env.example` в `.env.local` и задайте `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID`. Секреты не добавляйте в Git и не помещайте в клиентский код.
+
+Фоновое фото загружается с Unsplash и закреплено на фоне страницы (`background-attachment: fixed`), затемнено градиентом и не меняется при прокрутке. Для него предусмотрены локальные fallback-слои: исходный poster hero-видео и SVG-иллюстрация. В галерее регионов есть внешние фотографии и локальные fallback-иллюстрации; категории и карточки туров сейчас используют локальную SVG-графику.
+
+## Маршруты
+
+- `/ru`, `/en`, `/vi` — главная страница на соответствующем языке.
+- `/ru/privacy-policy`, `/en/privacy-policy`, `/vi/privacy-policy` — демонстрационная политика конфиденциальности.
+- `/api/lead` — endpoint формы заявок.
+
+## Документы перед запуском
+
+- `RELEASE-CHECKLIST.md` — обязательные действия перед публикацией.
+- `QA-REPORT.md` — что удалось проверить в текущей среде и ограничения проверки.
+- `CREDITS.md` — источники использованных фотографий.
+
+## Визуальный ориентир
+
+Региональный исследовательский блок вдохновлён навигацией по регионам Vietnam.travel; меню, маршрутизация и каталог туров — структурой туристического каталога Tripsite. Дизайн, тексты и компоненты адаптированы под Lotus Route, а не копируют их страницы.

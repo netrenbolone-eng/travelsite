@@ -10,8 +10,6 @@ import { faqIds } from "@/data/faq";
 import { reviews } from "@/data/reviews";
 import { tours } from "@/data/tours";
 import { site } from "@/config/site";
-import { ru } from "@/i18n/ru";
-import { en } from "@/i18n/en";
 import type { Dictionary, Locale } from "@/i18n/types";
 import { BookingDialog } from "@/components/booking-dialog";
 
@@ -28,7 +26,7 @@ export function CategoriesSection({ locale, dictionary }: { locale: Locale; dict
   return (
     <section className="section-pad" id="categories">
       <div className="container">
-        <SectionHeading title={dictionary.categories.title} subtitle={locale === "ru" ? "Четыре способа увидеть страну по-своему." : "Four ways to see the country your way."} number="01" />
+        <SectionHeading title={dictionary.categories.title} subtitle={locale === "ru" ? "Четыре способа увидеть страну по-своему." : locale === "vi" ? "Bốn cách để khám phá Việt Nam theo phong cách riêng." : "Four ways to see the country your way."} number="01" />
         <div className="category-grid">
           {categories.map((category, index) => (
             <a href="#tours" className={`category-tile category-tone-${index + 1}`} key={category.id}>
@@ -44,7 +42,8 @@ export function CategoriesSection({ locale, dictionary }: { locale: Locale; dict
 }
 
 function TourCard({ tour, locale, dictionary, index }: { tour: (typeof tours)[number]; locale: Locale; dictionary: Dictionary; index: number }) {
-  const isRu = locale === "ru";
+  const personSuffix = locale === "ru" ? "/ чел." : locale === "vi" ? "/ khách" : "/ person";
+  const whatsappText = locale === "ru" ? `Здравствуйте! Интересует тур «${tour.name.ru}».` : locale === "vi" ? `Xin chào! Tôi quan tâm đến tour ${tour.name.vi}.` : `Hi! I'm interested in the ${tour.name.en} tour.`;
   return (
     <Card className="tour-card group overflow-hidden border-border p-0 shadow-none">
       <div className="tour-photo-wrap">
@@ -56,8 +55,8 @@ function TourCard({ tour, locale, dictionary, index }: { tour: (typeof tours)[nu
         <div className="tour-rating"><Star className="size-4 fill-brand-orange text-brand-orange" /><b>{tour.rating}</b><span>({tour.reviewCount} {dictionary.tours.reviews})</span></div>
         <h3 className="tour-name">{tour.name[locale]}</h3>
         <p className="tour-description">{tour.description[locale]}</p>
-        <div className="tour-card-bottom"><p className="tour-price"><span>{dictionary.tours.from}</span><strong>${tour.price}</strong><small>{isRu ? "/ чел." : "/ person"}</small></p><span className="tour-route">{tour.category === "excursions" ? "VN / DAY TRIP" : "VN / PRIVATE"}</span></div>
-        <div className="tour-actions"><BookingDialog tour={tour} locale={locale} dictionary={dictionary} /><a className="tour-whatsapp" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(isRu ? `Здравствуйте! Интересует тур «${tour.name.ru}».` : `Hi! I'm interested in the ${tour.name.en} tour.`)}`} target="_blank" rel="noreferrer" aria-label={`${dictionary.tours.ask}: ${tour.name[locale]}`}><MessageCircle className="size-5" /></a></div>
+        <div className="tour-card-bottom"><p className="tour-price"><span>{dictionary.tours.from}</span><strong>${tour.price}</strong><small>{personSuffix}</small></p><span className="tour-route">{tour.category === "excursions" ? "VN / DAY TRIP" : "VN / PRIVATE"}</span></div>
+        <div className="tour-actions"><BookingDialog tour={tour} locale={locale} dictionary={dictionary} /><a className="tour-whatsapp" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(whatsappText)}`} target="_blank" rel="noreferrer" aria-label={`${dictionary.tours.ask}: ${tour.name[locale]}`}><MessageCircle className="size-5" /></a></div>
       </CardContent>
     </Card>
   );
@@ -131,16 +130,16 @@ export function ContactsSection({ locale, dictionary }: { locale: Locale; dictio
 }
 
 export function SiteFooter({ locale, dictionary }: { locale: Locale; dictionary: Dictionary }) {
-  const copy = locale === "ru" ? ru.footer : en.footer;
+  const copy = dictionary.footer;
   return (
     <footer className="site-footer">
-      <div className="container footer-main"><div className="footer-brand"><a href={`/${locale}`} className="wordmark"><Flower2 className="size-7 text-brand-orange" />{site.name.toUpperCase()}</a><p>{copy.tagline}</p></div><div className="footer-column"><b>{copy.social}</b><a href={site.social.instagram} target="_blank" rel="noreferrer">Instagram<ArrowUpRight /></a><a href={site.social.facebook} target="_blank" rel="noreferrer">Facebook<ArrowUpRight /></a><a href={site.telegram} target="_blank" rel="noreferrer">Telegram<ArrowUpRight /></a></div><div className="footer-column"><b>{copy.payments}</b><div className="payment-list">{[...site.paymentMethods, dictionary.form.transfer, dictionary.form.cash].map((method) => <span key={method}>{method}</span>)}</div><a href={site.depositUrl} target="_blank" rel="noreferrer">{dictionary.form.paymentLink}<ArrowUpRight /></a></div><div className="footer-language"><span>{locale === "ru" ? "ЯЗЫК" : "LANGUAGE"}</span><Link href="/ru" aria-current={locale === "ru" ? "page" : undefined}>RU</Link><span>/</span><Link href="/en" aria-current={locale === "en" ? "page" : undefined}>EN</Link></div></div>
+      <div className="container footer-main"><div className="footer-brand"><a href={`/${locale}`} className="wordmark"><Flower2 className="size-7 text-brand-orange" />{site.name.toUpperCase()}</a><p>{copy.tagline}</p></div><div className="footer-column"><b>{copy.social}</b><a href={site.social.instagram} target="_blank" rel="noreferrer">Instagram<ArrowUpRight /></a><a href={site.social.facebook} target="_blank" rel="noreferrer">Facebook<ArrowUpRight /></a><a href={site.telegram} target="_blank" rel="noreferrer">Telegram<ArrowUpRight /></a></div><div className="footer-column"><b>{copy.payments}</b><div className="payment-list">{[...site.paymentMethods, dictionary.form.transfer, dictionary.form.cash].map((method) => <span key={method}>{method}</span>)}</div><a href={site.depositUrl} target="_blank" rel="noreferrer">{dictionary.form.paymentLink}<ArrowUpRight /></a></div><div className="footer-language"><span>{copy.language}</span>{(["ru", "en", "vi"] as const).map((code) => <Link href={`/${code}`} key={code} aria-current={locale === code ? "page" : undefined}>{code.toUpperCase()}</Link>)}</div></div>
       <div className="container footer-bottom"><span>{copy.rights}</span><Link href={`/${locale}/privacy-policy`}>{copy.privacy}</Link></div>
     </footer>
   );
 }
 
 export function FloatingContact({ locale, dictionary }: { locale: Locale; dictionary: Dictionary }) {
-  const message = locale === "ru" ? "Здравствуйте! Хочу узнать о турах во Вьетнаме." : "Hi! I'd like to ask about Vietnam tours.";
-  return <div className="floating-contact" aria-label={locale === "ru" ? "Связаться с нами" : "Contact us"}><a className="floating-whatsapp" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`} target="_blank" rel="noreferrer" aria-label={dictionary.sticky.whatsapp}><MessageCircle /><span>{dictionary.sticky.whatsapp}</span></a><a href={site.telegram} target="_blank" rel="noreferrer" aria-label={dictionary.sticky.telegram}><span className="telegram-symbol">tg</span><span>{dictionary.sticky.telegram}</span></a><a href={`tel:${site.phone}`} aria-label={dictionary.sticky.call}><Phone /><span>{dictionary.sticky.call}</span></a></div>;
+  const message = locale === "ru" ? "Здравствуйте! Хочу узнать о турах во Вьетнаме." : locale === "vi" ? "Xin chào! Tôi muốn tìm hiểu về các tour du lịch Việt Nam." : "Hi! I'd like to ask about Vietnam tours.";
+  return <div className="floating-contact" aria-label={dictionary.sticky.contactLabel}><a className="floating-whatsapp" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`} target="_blank" rel="noreferrer" aria-label={dictionary.sticky.whatsapp}><MessageCircle /><span>{dictionary.sticky.whatsapp}</span></a><a href={site.telegram} target="_blank" rel="noreferrer" aria-label={dictionary.sticky.telegram}><span className="telegram-symbol">tg</span><span>{dictionary.sticky.telegram}</span></a><a href={`tel:${site.phone}`} aria-label={dictionary.sticky.call}><Phone /><span>{dictionary.sticky.call}</span></a></div>;
 }

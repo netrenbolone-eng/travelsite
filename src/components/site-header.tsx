@@ -5,15 +5,20 @@ import { Flower2, Menu, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ru } from "@/i18n/ru";
-import { en } from "@/i18n/en";
+import { getDictionary } from "@/i18n";
+import type { Locale } from "@/i18n/types";
 import { site } from "@/config/site";
 import { useSetMenuOpen } from "@/hooks/use-scroll-chrome";
 
-export function SiteHeader({ locale }: { locale: "ru" | "en" }) {
+const languages: { code: Locale; label: string }[] = [
+  { code: "ru", label: "RU" },
+  { code: "en", label: "EN" },
+  { code: "vi", label: "VI" },
+];
+
+export function SiteHeader({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
-  const isRu = locale === "ru";
-  const labels = (isRu ? ru : en).header;
+  const labels = getDictionary(locale).header;
   const whatsappUrl = `https://wa.me/${site.whatsapp}`;
   const setMenuOpen = useSetMenuOpen();
   const handleMenuOpenChange = (nextOpen: boolean) => {
@@ -21,10 +26,11 @@ export function SiteHeader({ locale }: { locale: "ru" | "en" }) {
     setMenuOpen(nextOpen);
   };
   const links = [
+    ["#explore", labels.destinations],
     ["#tours", labels.tours],
+    ["#categories", labels.experiences],
     ["#how-it-works", labels.how],
-    ["#reviews", labels.reviews],
-    ["#faq", labels.faq],
+    ["#contacts", labels.contacts],
   ];
 
   return (
@@ -33,14 +39,12 @@ export function SiteHeader({ locale }: { locale: "ru" | "en" }) {
         <Flower2 aria-hidden="true" className="size-7 text-brand-orange" strokeWidth={1.7} />
         <span>{site.name.toUpperCase()}</span>
       </Link>
-      <nav className="desktop-nav" aria-label={isRu ? "Основная навигация" : "Main navigation"}>
+      <nav className="desktop-nav" aria-label={labels.destinations}>
         {links.map(([href, label]) => <a key={href} href={href}>{label}</a>)}
       </nav>
       <div className="header-actions">
         <div className="locale-switch" aria-label="Language">
-          <Link href="/ru" aria-current={isRu ? "page" : undefined}>RU</Link>
-          <span aria-hidden="true">/</span>
-          <Link href="/en" aria-current={!isRu ? "page" : undefined}>EN</Link>
+          {languages.map((language) => <Link href={`/${language.code}`} key={language.code} aria-current={locale === language.code ? "page" : undefined}>{language.label}</Link>)}
         </div>
         <Button asChild variant="whatsapp" className="header-whatsapp">
           <a href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle aria-hidden="true" className="size-4" />{labels.whatsapp}</a>
@@ -55,7 +59,9 @@ export function SiteHeader({ locale }: { locale: "ru" | "en" }) {
             <Link href={`/${locale}`} className="wordmark mb-10 mt-10"><Flower2 className="size-7 text-brand-orange" />{site.name.toUpperCase()}</Link>
             <nav className="mobile-nav">
               {links.map(([href, label]) => <a href={href} key={href} onClick={() => setOpen(false)}>{label}</a>)}
-              <div className="locale-switch mt-4"><Link href="/ru">RU</Link><span>/</span><Link href="/en">EN</Link></div>
+              <div className="locale-switch mobile-locale-switch" aria-label="Language">
+                {languages.map((language) => <Link href={`/${language.code}`} key={language.code} aria-current={locale === language.code ? "page" : undefined}>{language.label}</Link>)}
+              </div>
               <Button asChild variant="whatsapp" className="mt-5 w-full"><a href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle className="size-4" />{labels.whatsapp}</a></Button>
             </nav>
           </SheetContent>

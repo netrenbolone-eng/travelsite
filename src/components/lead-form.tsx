@@ -65,14 +65,16 @@ export function LeadForm({
     });
     const result = await response.json().catch(() => null) as { success?: boolean } | null;
     if (!response.ok || !result?.success) {
-      toast.error(locale === "ru" ? "Не удалось отправить заявку. Напишите нам в мессенджер." : "Could not send your request. Please message us directly.");
+      toast.error(dictionary.form.sendError);
       return;
     }
 
     const selectedTour = tours.find((tour) => tour.id === values.tourId);
     const message = locale === "ru"
-      ? `Здравствуйте! Я оставил(а) заявку на сайте ${site.name}. Имя: ${values.name}. Тур: ${selectedTour?.name.ru ?? "помогите выбрать"}. Дата: ${values.date || "не выбрана"}. Гостей: ${values.guests}.`
-      : `Hi! I sent a request on the ${site.name} website. Name: ${values.name}. Tour: ${selectedTour?.name.en ?? "help me choose"}. Date: ${values.date || "not selected"}. Guests: ${values.guests}.`;
+      ? `Здравствуйте! Я оставил(а) заявку на сайте ${site.name}. Имя: ${values.name}. Тур: ${selectedTour?.name.ru ?? dictionary.form.helpChoose}. Дата: ${values.date || dictionary.form.dateNotSelected}. Гостей: ${values.guests}.`
+      : locale === "vi"
+        ? `Xin chào! Tôi đã gửi yêu cầu trên website ${site.name}. Tên: ${values.name}. Tour: ${selectedTour?.name.vi ?? dictionary.form.helpChoose}. Ngày: ${values.date || dictionary.form.dateNotSelected}. Số khách: ${values.guests}.`
+        : `Hi! I sent a request on the ${site.name} website. Name: ${values.name}. Tour: ${selectedTour?.name.en ?? dictionary.form.helpChoose}. Date: ${values.date || dictionary.form.dateNotSelected}. Guests: ${values.guests}.`;
     setWhatsappMessage(message);
     setSubmitted(true);
     toast.success(dictionary.form.success);

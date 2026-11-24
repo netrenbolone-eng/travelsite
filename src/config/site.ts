@@ -6,7 +6,7 @@ export const site = {
   telegram: "https://t.me/lotusroute_demo", // DEMO: REPLACE
   email: "hello@lotusroute.example", // DEMO: REPLACE
   address: "123 Example Street, Da Lat, Vietnam", // DEMO: REPLACE
-  hours: { ru: "Ежедневно, 08:00–20:00 ICT", en: "Daily, 08:00–20:00 ICT" }, // DEMO: REPLACE
+  hours: { ru: "Ежедневно, 08:00–20:00 ICT", en: "Daily, 08:00–20:00 ICT", vi: "Hằng ngày, 08:00–20:00 ICT" }, // DEMO: REPLACE
   mapEmbed: "https://www.google.com/maps?q=Da+Lat,+Vietnam&output=embed", // DEMO: REPLACE with business location
   depositUrl: "https://payments.example/lotus-route-deposit", // DEMO: REPLACE with secure payment link
   googleReviewsUrl: "https://maps.google.com/?q=Lotus+Route+Vietnam+reviews", // DEMO: REPLACE

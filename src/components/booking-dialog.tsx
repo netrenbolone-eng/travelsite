@@ -11,7 +11,9 @@ import { site } from "@/config/site";
 export function BookingDialog({ tour, locale, dictionary }: { tour: Tour; locale: Locale; dictionary: Dictionary }) {
   const message = locale === "ru"
     ? `Здравствуйте! Хочу узнать о туре «${tour.name.ru}» (от $${tour.price}). Подскажите, пожалуйста, даты и детали.`
-    : `Hi! I'm interested in the "${tour.name.en}" tour (from $${tour.price}). Could you share dates and details?`;
+    : locale === "vi"
+      ? `Xin chào! Tôi quan tâm đến tour ${tour.name.vi} (từ $${tour.price}). Vui lòng cho tôi biết ngày khởi hành và chi tiết.`
+      : `Hi! I'm interested in the "${tour.name.en}" tour (from $${tour.price}). Could you share dates and details?`;
   const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 
   return (

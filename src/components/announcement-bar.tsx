@@ -2,14 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { Pause, Play } from "lucide-react";
-import { ru } from "@/i18n/ru";
-import { en } from "@/i18n/en";
+import { getDictionary } from "@/i18n";
+import type { Locale } from "@/i18n/types";
 
-export function AnnouncementBar({ locale }: { locale: "ru" | "en" }) {
-  const messages = locale === "ru" ? ru.announcements : en.announcements;
+export function AnnouncementBar({ locale }: { locale: Locale }) {
+  const dictionary = getDictionary(locale);
+  const messages = dictionary.announcements;
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const controls = locale === "ru" ? ru.announcementControls : en.announcementControls;
+  const controls = dictionary.announcementControls;
+
+  useEffect(() => {
+    setActive(0);
+  }, [locale]);
 
   useEffect(() => {
     if (paused) return;
@@ -20,14 +25,7 @@ export function AnnouncementBar({ locale }: { locale: "ru" | "en" }) {
   return (
     <div className="announcement-bar" aria-live="polite">
       <span>{messages[active]}</span>
-      <button
-        type="button"
-        className="announcement-control"
-        aria-label={paused ? controls.resume : controls.pause}
-        title={paused ? controls.resume : controls.pause}
-        aria-pressed={paused}
-        onClick={() => setPaused((current) => !current)}
-      >
+      <button type="button" className="announcement-control" aria-label={paused ? controls.resume : controls.pause} title={paused ? controls.resume : controls.pause} aria-pressed={paused} onClick={() => setPaused((current) => !current)}>
         {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
       </button>
     </div>

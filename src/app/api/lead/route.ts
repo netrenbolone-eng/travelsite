@@ -11,7 +11,7 @@ const leadSchema = z.object({
   guests: z.coerce.number().int().min(1).max(30),
   comment: z.string().trim().max(1000).optional(),
   companyWebsite: z.string().max(200),
-  locale: z.enum(["ru", "en"]),
+  locale: z.enum(["ru", "en", "vi"]),
 });
 
 export async function POST(request: Request) {
@@ -33,13 +33,13 @@ export async function POST(request: Request) {
   const { name, phone, messenger, tourId, date, guests, comment, locale } = parsed.data;
   const text = [
     `${site.name} lead (${locale.toUpperCase()})`,
-    `Name: ${name}`,
-    `Phone: ${phone}`,
-    `Contact via: ${messenger}`,
-    `Tour ID: ${tourId || "not selected"}`,
-    `Date: ${date || "not selected"}`,
-    `Guests: ${guests}`,
-    comment ? `Comment: ${comment}` : "",
+    locale === "ru" ? `Имя: ${name}` : locale === "vi" ? `Tên: ${name}` : `Name: ${name}`,
+    locale === "ru" ? `Телефон: ${phone}` : locale === "vi" ? `Điện thoại: ${phone}` : `Phone: ${phone}`,
+    locale === "ru" ? `Связь: ${messenger}` : locale === "vi" ? `Liên hệ qua: ${messenger}` : `Contact via: ${messenger}`,
+    locale === "ru" ? `ID тура: ${tourId || "не выбран"}` : locale === "vi" ? `Mã tour: ${tourId || "chưa chọn"}` : `Tour ID: ${tourId || "not selected"}`,
+    locale === "ru" ? `Дата: ${date || "не выбрана"}` : locale === "vi" ? `Ngày: ${date || "chưa chọn"}` : `Date: ${date || "not selected"}`,
+    locale === "ru" ? `Гостей: ${guests}` : locale === "vi" ? `Số khách: ${guests}` : `Guests: ${guests}`,
+    comment ? (locale === "ru" ? `Комментарий: ${comment}` : locale === "vi" ? `Ghi chú: ${comment}` : `Comment: ${comment}`) : "",
   ].filter(Boolean).join("\n");
 
   try {

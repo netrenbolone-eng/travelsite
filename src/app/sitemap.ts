@@ -1,17 +1,20 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/config/site";
 
+const locales = ["ru", "en", "vi"] as const;
+const paths = ["", "/privacy-policy"] as const;
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["/ru", "/en", "/ru/privacy-policy", "/en/privacy-policy"];
-  return routes.map((path) => ({
-    url: `${site.origin}${path}`,
-    lastModified: new Date(),
-    changeFrequency: path.includes("privacy-policy") ? "yearly" : "weekly",
-    priority: path.includes("privacy-policy") ? 0.3 : 1,
-    alternates: path === "/ru" || path === "/en"
-      ? { languages: { ru: `${site.origin}/ru`, en: `${site.origin}/en`, "x-default": `${site.origin}/ru` } }
-      : path.includes("privacy-policy")
-        ? { languages: { ru: `${site.origin}/ru/privacy-policy`, en: `${site.origin}/en/privacy-policy`, "x-default": `${site.origin}/ru/privacy-policy` } }
-      : undefined,
+  return locales.flatMap((locale) => paths.map((suffix) => {
+    const path = `/${locale}${suffix}`;
+    return {
+      url: `${site.origin}${path}`,
+      lastModified: new Date(),
+      changeFrequency: suffix ? "yearly" as const : "weekly" as const,
+      priority: suffix ? 0.3 : 1,
+      alternates: {
+        languages: Object.fromEntries(locales.map((language) => [language, `${site.origin}/${language}${suffix}`]).concat([["x-default", `${site.origin}/ru${suffix}`]])),
+      },
+    };
   }));
 }
